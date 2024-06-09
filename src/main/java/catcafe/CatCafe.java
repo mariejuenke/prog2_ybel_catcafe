@@ -6,6 +6,8 @@ import tree.Empty;
 import tree.Tree;
 import tree.TreeVisitor;
 
+import java.util.Optional;
+
 public class CatCafe {
     private Tree<FelineOverLord> clowder = new Empty<>();
 
@@ -17,25 +19,25 @@ public class CatCafe {
         return clowder.size();
     }
 
-    public FelineOverLord getCatByName(String name) {
-        if (name == null) return null;
+    public Optional<FelineOverLord> getCatByName(String name) {
+        requireNonNull(name);
 
         for (FelineOverLord c : clowder) {
-            if (c.name().equals(name)) return c;
+            if (c.name().equals(name)) return Optional.ofNullable(c);
         }
 
-        return null;
+        return Optional.empty();
     }
 
-    public FelineOverLord getCatByWeight(int minWeight, int maxWeight) {
+    public Optional<FelineOverLord> getCatByWeight(int minWeight, int maxWeight) {
         if (minWeight < 0) return null;
         if (maxWeight < minWeight) return null;
 
         for (FelineOverLord c : clowder) {
-            if (c.weight() >= minWeight && c.weight() < maxWeight) return c;
+            if (c.weight() >= minWeight && c.weight() < maxWeight) return Optional.ofNullable(c);
         }
 
-        return null;
+        return Optional.empty();
     }
 
     String accept(TreeVisitor<FelineOverLord> visitor) {
